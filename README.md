@@ -2,7 +2,7 @@
 
 To run the server:
 
-- In the root directory: go build
+- In the root directory: `go build`
 
 To run the client:
 - In ./tool/chatty-cli : `go build`
