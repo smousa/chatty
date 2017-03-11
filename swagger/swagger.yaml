@@ -1,0 +1,118 @@
+basePath: /api
+consumes:
+- application/json
+- application/xml
+- application/gob
+- application/x-gob
+definitions:
+  ChattyLink:
+    description: Info about a link (default view)
+    example:
+      title: Fugit est.
+      url: Aliquam voluptas saepe aut soluta qui.
+    properties:
+      title:
+        description: Title of the url
+        example: Fugit est.
+        type: string
+      url:
+        description: Parsed url
+        example: Aliquam voluptas saepe aut soluta qui.
+        type: string
+    required:
+    - url
+    - title
+    title: 'Mediatype identifier: application/chatty.link+json; view=default'
+    type: object
+  ChattyLinkCollection:
+    description: ChattyLinkCollection is the media type for an array of ChattyLink
+      (default view)
+    example:
+    - title: Fugit est.
+      url: Aliquam voluptas saepe aut soluta qui.
+    items:
+      $ref: '#/definitions/ChattyLink'
+    title: 'Mediatype identifier: application/chatty.link+json; type=collection; view=default'
+    type: array
+  ChattyMessage_info:
+    description: Info about a message (default view)
+    example:
+      emoticons:
+      - Omnis quia et similique fugiat.
+      links:
+      - title: Fugit est.
+        url: Aliquam voluptas saepe aut soluta qui.
+      - title: Fugit est.
+        url: Aliquam voluptas saepe aut soluta qui.
+      mentions:
+      - Et repellendus voluptatum iure ea beatae.
+      - Et repellendus voluptatum iure ea beatae.
+      - Et repellendus voluptatum iure ea beatae.
+    properties:
+      emoticons:
+        description: Emoticons
+        example:
+        - Omnis quia et similique fugiat.
+        items:
+          example: Omnis quia et similique fugiat.
+          type: string
+        type: array
+      links:
+        $ref: '#/definitions/ChattyLinkCollection'
+      mentions:
+        description: Mentions
+        example:
+        - Et repellendus voluptatum iure ea beatae.
+        - Et repellendus voluptatum iure ea beatae.
+        - Et repellendus voluptatum iure ea beatae.
+        items:
+          example: Et repellendus voluptatum iure ea beatae.
+          type: string
+        type: array
+    title: 'Mediatype identifier: application/chatty.message_info+json; view=default'
+    type: object
+  ParseMessagePayload:
+    example:
+      input: Eligendi alias accusantium magni ipsum.
+    properties:
+      input:
+        example: Eligendi alias accusantium magni ipsum.
+        type: string
+    required:
+    - input
+    title: ParseMessagePayload
+    type: object
+host: localhost:8081
+info:
+  description: Parse all of your chats and other things!
+  title: Chat message parser
+  version: ""
+paths:
+  /messages:
+    put:
+      description: Extract message info from message
+      operationId: message#parse
+      parameters:
+      - in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/ParseMessagePayload'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ChattyMessage_info'
+      schemes:
+      - http
+      summary: parse message
+      tags:
+      - message
+produces:
+- application/json
+- application/xml
+- application/gob
+- application/x-gob
+schemes:
+- http
+swagger: "2.0"
