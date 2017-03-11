@@ -28,3 +28,5 @@ TODO: better url parsing
 TODO: refine @mentions to not mistakenly parse emails
 
 TODO: reverse lookup of emoticons ??? FUTURE FEATURE MAYBE?
+
+I used goagen to set up my server and clients because it allows me to focus less on wiring and more on writing the stuff that I actually care about, which is why there is so many deps in this package.
